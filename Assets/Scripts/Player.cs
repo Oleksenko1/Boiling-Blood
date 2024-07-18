@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] private LayerMask platformsLayer;
 
+    private HealthSystem healthSystem;
     private BoxCollider2D jumpBoxColider;
     private PlayerAtackTypesListSO atackTypesList;
     private Rigidbody2D rigidbody2D;
@@ -26,12 +27,19 @@ public class Player : MonoBehaviour
         atackTypesList = GameAssets.Instance.playerAtackTypesList;
         jumpBoxColider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+        healthSystem = GetComponent<HealthSystem>();
     }
     private void Update()
     {
         HandleMovement();
 
         HandleAtacks();
+
+        // Testing healthBar
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            healthSystem.Damage(5);
+        }
     }
 
     private void HandleMovement()
@@ -77,7 +85,7 @@ public class Player : MonoBehaviour
     private bool IsGrounded()
     {
         RaycastHit2D raycastHit2d = Physics2D.BoxCast(jumpBoxColider.bounds.center, jumpBoxColider.bounds.size, 0f, Vector2.down, .1f, platformsLayer);
-        Debug.Log(raycastHit2d.collider);
+        //Debug.Log(raycastHit2d.collider);
         return raycastHit2d.collider != null;
     }
     public float GetLookDirection()

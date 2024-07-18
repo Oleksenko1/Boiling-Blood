@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class EnemyTypeHolder : MonoBehaviour
 {
-    [SerializeField] EnemySO enemyType;
+    [SerializeField] private EnemySO enemyType;
+    public EnemySO GetEnemyType()
+    {
+        return enemyType;
+    }
 }

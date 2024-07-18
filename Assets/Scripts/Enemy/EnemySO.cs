@@ -8,4 +8,5 @@ public class EnemySO : ScriptableObject
     [SerializeField] string stringName;
     [SerializeField] Sprite sprite;
     [SerializeField] Transform prefab;
+    [SerializeField] public Transform hitParticles;
 }

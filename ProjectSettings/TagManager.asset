@@ -43,3 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: HitParticles
+    uniqueID: 3945529783
+    locked: 0

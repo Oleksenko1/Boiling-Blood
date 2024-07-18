@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerAtack : MonoBehaviour
 {
     private PlayerAtackTypesSO playerAtackType;
+    private Transform hitPoint;
     private BoxCollider2D boxCollider;
     private int damage;
     public static PlayerAtack Create(Vector3 position, float lookDirection, PlayerAtackTypesSO atackType)
@@ -22,7 +23,7 @@ public class PlayerAtack : MonoBehaviour
     private void SetParametrs(float lookDirection)
     {
         boxCollider = GetComponent<BoxCollider2D>();
-
+        hitPoint = transform.Find("hitPoint");
         playerAtackType = GetComponent<PlayerAtackTypeHolder>().atackType;
 
         damage = playerAtackType.damageAmount;
@@ -36,14 +37,20 @@ public class PlayerAtack : MonoBehaviour
         Vector3 punchSpawnPosition = transform.position + new Vector3(boxCollider.offset.x * lookDirection, boxCollider.offset.y);
         // Creates boxcollider to check if punch hit someone
         Collider2D[] collider2DArray = Physics2D.OverlapBoxAll(punchSpawnPosition, boxCollider.size, (lookDirection - 1) * 90);
-        foreach (Collider2D colider2D in collider2DArray)
+        foreach (Collider2D collider2D in collider2DArray)
         {
-            if(colider2D.CompareTag("Enemy"))
+            if(collider2D.CompareTag("Enemy"))
             {
                 Debug.Log("Hit " + playerAtackType.typeOfPunch.ToString() + " with " + damage + " damage!");
-                colider2D.GetComponent<HealthSystem>().Damage(damage);
+                EnemySO enemyType = collider2D.GetComponent<EnemyTypeHolder>().GetEnemyType();
+
+                Instantiate(enemyType.hitParticles, EnemyUtillClass.CalculateHitPoint(hitPoint, collider2D), Quaternion.identity);
+
+                collider2D.GetComponent<HealthSystem>().Damage(damage);
                 CinemachineShake.Instance.ShakeCamera(2, 0.2f);
             }
         }
     }
+
+    
 }

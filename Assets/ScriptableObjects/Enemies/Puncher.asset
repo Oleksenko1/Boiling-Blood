@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stringName: Puncher
   sprite: {fileID: 0}
-  MaxHP: 20
   prefab: {fileID: 7687748766596331385, guid: 70f387df84ce5374086ef7d32601436a, type: 3}
+  hitParticles: {fileID: 1034302710822100428, guid: 92c3f3d4e14a8624d81b4bfbd803257c, type: 3}
